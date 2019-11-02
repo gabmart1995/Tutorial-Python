@@ -1,0 +1,34 @@
+Notas sobre python
+
+Python es un lenguaje de programacion poderoso orientado a objetos, pero debes tener algunas
+consideraciones
+
+1.- NO EXISTE PUNTO Y COMA: para separar instruciones se continua a la siguiente
+linea, solo de utiliza para separar instrucciones dentro de la misma lineas
+2.- OJO CON LA IDENTACION: este es un lenguaje fuertemente tipado y reconoce los 
+saltos de linea dentro del codigo.
+3.- SublimeREPL: es el paquete especializado para el sintaxis de python descargalo.
+4.- Tipos de datos: Numericos (enteros, float, complejos), textos, booleanos.
+5.- Operadores: mira la imagen JPG del video 4
+6.- La triple comilla puede utiizarse para contener mensaje dentro de variables.
+
+7.- Sintaxis de una funcion en Python
+
+def nombre_funcion( parametros ):
+	instrucciones ...
+	return (opcional)
+
+8.- ejecucion:
+
+	nombre_funcion()
+
+9.- Sintaxis de las listas
+
+	nombreLista = [ elem1, elem2, elem3, ... ]
+
+	Recuerda que existe un indice que muestra la posicióny el 0 corresponde al primer elemento
+
+10.- Nota evita los acentos Python no los reconoce y genera un error de compilación
+11.- Recuerda los valores booleanos tiene la primera letra en mayuscula True o False
+
+Video siguiente Video 7 Curso de Python
