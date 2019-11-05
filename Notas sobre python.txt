@@ -11,7 +11,6 @@ saltos de linea dentro del codigo.
 4.- Tipos de datos: Numericos (enteros, float, complejos), textos, booleanos.
 5.- Operadores: mira la imagen JPG del video 4
 6.- La triple comilla puede utiizarse para contener mensaje dentro de variables.
-
 7.- Sintaxis de una funcion en Python
 
 def nombre_funcion( parametros ):
@@ -31,8 +30,6 @@ def nombre_funcion( parametros ):
 10.- Nota evita los acentos Python no los reconoce y genera un error de compilación
 11.- Recuerda los valores booleanos tiene la primera letra en mayuscula True o False
 
-Video siguiente Video 7 Curso de Python
-
 12.- las tuplas son elementos inmutables, no se modifican despues de su creación.
 Son más rapidas, menor espacio en memoria y pueden utilizarse como las claves de
 un diccionario.
@@ -49,3 +46,8 @@ por los que hay que parsear los datos antes de validar.
 como cadenas se utiliza la funcion raw_input permite alojar cadenas de texto dentro de
 las mismas. Input solo permite obtiener solo un dato. Ademas debes de parsear los datos
 constantemente para saber que estas utilizando
+
+15.- Python puede utilizar operaciones de operadores de comparacion de forma encadenada
+para evualuar en una sola condicion sin utilizar el switch
+
+16: lower() y upper() permite tomar los valores string y volverlos mayusculas o minusculas
