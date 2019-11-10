@@ -51,3 +51,8 @@ constantemente para saber que estas utilizando
 para evualuar en una sola condicion sin utilizar el switch
 
 16: lower() y upper() permite tomar los valores string y volverlos mayusculas o minusculas
+
+17.- Los bucles pueden ser de 2 tipos: determinados e indeterminados la diferencia
+entre ellos es la cantidad de veces que se ejecutan.
+
+18.- Investigar sobre el uso de variables locales y globales es muy fuerte en ese aspecto
