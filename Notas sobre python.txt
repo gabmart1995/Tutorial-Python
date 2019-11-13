@@ -56,3 +56,14 @@ para evualuar en una sola condicion sin utilizar el switch
 entre ellos es la cantidad de veces que se ejecutan.
 
 18.- Investigar sobre el uso de variables locales y globales es muy fuerte en ese aspecto
+
+19: Generadores: son estructuras que extraen valores de una función y se almacenan 
+en objetos iterables. -> se almacenan de uno en uno -> aplica un suspencion de
+estado
+
+. Muy útiles con listas de valores infinitos siempre devuelve de uno en uno
+
+20: yield from: simplifica el codigo en los generadores en caso de usar bucles
+anidados
+
+21: Excepciones: son errores en tiempo de ejecución la sintaxis del codigo es correcta pero durante la ejecución ocurre algo inesperado. 
