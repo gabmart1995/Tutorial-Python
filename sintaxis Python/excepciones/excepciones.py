@@ -1,3 +1,7 @@
+# ---------------------------
+#	Funciones
+# --------------------------
+
 def suma( num1, num2 ):
 	return num1 + num2
 
@@ -18,8 +22,22 @@ def division( num1, num2 ):
 		print( "No se puede dividir entre 0" )
 		return "Operacion erronea"
 
-op1 = int( input( "Introduce el primer numero: " ) )
-op2 = int( input( "Introduce el segundo numero: " ) )
+# ------------------------------------------------
+#	Ejecución del programa
+# ------------------------------------------------
+
+while True:
+
+	try: 
+
+		op1 = int( input( "Introduce el primer numero: " ) )
+		op2 = int( input( "Introduce el segundo numero: " ) )
+
+		break
+
+	except ValueError:
+		
+		print( "Los valores introducidos no son correctos. Intentalo de nuevo" )
 
 
 operacion = input( "Introduce la operacion a realizar: ( suma, resta, multiplicacion, division ): " )

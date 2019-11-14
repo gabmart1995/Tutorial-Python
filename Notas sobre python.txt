@@ -66,4 +66,14 @@ estado
 20: yield from: simplifica el codigo en los generadores en caso de usar bucles
 anidados
 
-21: Excepciones: son errores en tiempo de ejecución la sintaxis del codigo es correcta pero durante la ejecución ocurre algo inesperado. 
+21: Excepciones: son errores en tiempo de ejecución la sintaxis del codigo es correcta pero durante la ejecución ocurre algo inesperado.
+
+22: Se puede construir excepciones personalizadas para el control de las actividades dentro del try - catch. usando la palabra Raise
+
+23: POO: programacion orientada a objetos. cuando se contruyen metodos es obligatorio colocar el parametro self que hace referencia a la clase
+
+24: herencia: es un termino importante en la programación permiten utilizar atributos y metodos de otras clases, cumple con la reutilizacion de código. Python puede utilizar 
+herencia multiple
+
+Cuando sobreescribes una funcion siempre se ejecuta el valor de la clase hija. y hereda
+sus atributos y metodos  
