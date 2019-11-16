@@ -76,4 +76,10 @@ anidados
 herencia multiple
 
 Cuando sobreescribes una funcion siempre se ejecuta el valor de la clase hija. y hereda
-sus atributos y metodos  
+sus atributos y metodos 
+
+Super(): Llama a un atributo o metodo de la clase padre. existe una funcion en Python que
+indica que un elemento pertenece a una instancia determinada.
+
+25.- Cadenas de caracteres objetos string tienen sus propiedades y metodos permiten validar
+cadenas

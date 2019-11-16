@@ -53,16 +53,19 @@ class Moto( Vehiculo ):  # herencia
 			"\nAccelerando:", self.accelera, "\nFrenando:", self.frena, "\n" + self.hCaballito, "\n" )
 
 
-class VElectricos():
+class VElectricos( Vehiculo ):
 
-	def __init__( self ):
+	def __init__( self, marca, modelo ):
+
+		super().__init__( marca, modelo )
+
 		self.autonomia = 100
 
 	def cargarBaterias( self ):
 		self.cargando = True
 
 
-class BicicletaElectica( Vehiculo, VElectricos ): # herencia multiple
+class BicicletaElectica( VElectricos, Vehiculo ): # herencia multiple
 	pass
 
 
