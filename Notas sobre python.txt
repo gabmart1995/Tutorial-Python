@@ -83,3 +83,22 @@ indica que un elemento pertenece a una instancia determinada.
 
 25.- Cadenas de caracteres objetos string tienen sus propiedades y metodos permiten validar
 cadenas
+
+26.- Se separa todo en modulos que permiten la reutilizacion del codigo en Python. Conectados 
+a traves de paquetes, sirviendo para almacenar modulos relacionados entre sí. Para crearlo
+se necesita crear un archivo llamado __init__.py QUE NO SE TE OLVIDE 
+
+27.- Paquetes distribuibles: se pueden crear paquetes que permiten el desarrollo de nuevas
+funciones y se permiten instalar este paquete en Python ver archivo setup
+
+comando  python3 setup.py sdist recuerda  instalar el modulo 
+apt-get install python3-pip 
+
+Ademas para instalar el paquete usa el coamndo siguiente como administrador.
+pip3 install nombre_de_paquete.zip
+pip3 uninstall nombre_de_paquete
+
+ATENCION: mucho cuidado con la sintaxis del archivo setup.py porque sino los 
+componentes no se importaran
+
+los archivos se importaran en el siguiente PATH = '/usr/local/lib/python3.4/dist-packages'
