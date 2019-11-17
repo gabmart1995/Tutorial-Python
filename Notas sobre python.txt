@@ -102,3 +102,16 @@ ATENCION: mucho cuidado con la sintaxis del archivo setup.py porque sino los
 componentes no se importaran
 
 los archivos se importaran en el siguiente PATH = '/usr/local/lib/python3.4/dist-packages'
+
+28: Archivos externos: esta seccion se habla sobre la persistencia de datos existen 2
+formas : archivos externos y bases de datos
+
+fases de manipulacion de archivos
+
+creacion -> apertura -> manipulacion -> cierre
+
+Modos de apertura de archivos
+
+	lectura = r
+	escritura = w
+	append = a  ( permite agregar informacion en un archivo que ya existe )
