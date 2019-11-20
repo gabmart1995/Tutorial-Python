@@ -121,4 +121,7 @@ para distrubuir más facilmente a nivel mundial. Se utiliza una biblioteca
 llama pickle que utiliza 2 metodos dump y load
 
 dump(): volcado de datos al archivo binario
-load(): carga de datos del binario externo.
+load(): carga de datos del binario externo
+
+30.- Interfaces graficas: recuerda instalar el paquete python3-tk para emular los
+paquetes. apt-get python3-tk
