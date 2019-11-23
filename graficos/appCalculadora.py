@@ -1,250 +1,345 @@
-from tkinter import *
+import tkinter as tk
 
-# --------- Calculadora app ---------------------- #
-
-# frame
-app = Tk()
-
-app.title( "Calculadora Python" )
-
-frame = Frame( app )
-frame.pack()
-
-# ------------- variables globales ----------- #
-
-operacion = ""
-resetPantalla = True
-resultado = 0
-
-# -------------- Pantalla ------------------ #
-
-numeroPantalla = StringVar()
-numeroPantalla.set( "0" )
-
-pantalla = Entry( frame, textvariable = numeroPantalla )
-pantalla.grid( row = 1, column = 1, padx = 10, pady = 10, columnspan = 5 )
-pantalla.config( background = "black", fg = "#03f943", justify = "right" )
-
-# columnspan toma 4 posiciones de la grilla
-
-# --------- Pulsaciones Teclado --------------#
-
-def numeroPulsado( num ):
-	
-	global operacion
-	global resetPantalla
-
-	if resetPantalla:
-
-		numeroPantalla.set( num )
-		resetPantalla = False
-
-	else:
-
-		numeroPantalla.set( numeroPantalla.get() + num )
+class AppCalculadora( tk.Frame ):
 
 
-def suma( num ): 	# suma
-	
-	global operacion
-	global resultado
-	global resetPantalla
+	def __init__( self, master  ):
 
-	resultado += int( num )
+		tk.Frame.__init__( self, master )
+		self.pack()
 
-	operacion = "suma"
+		# clase operaciones
+		self.operaciones = Operaciones()
 
-	resetPantalla = True 
+		self.crearComponentes()
 
-	numeroPantalla.set( resultado )
+	def capturarNumero( self, num ):
+		
+		global operacion
+		global resetPantalla
 
-def resta( num ):  # resta
+		if resetPantalla:
 
-	global operacion
-	global resultado
-	global resetPantalla
+			numeroPantalla.set( num )
+			resetPantalla = False
 
-	if resultado == 0:
+		else: 
 
-		resultado = int( num )
+			numeroPantalla.set( numeroPantalla.get() + num )
 
-	else:
 
-		resultado -= int( num )
+	def crearComponentes( self ):  # componentes graficos
+
+		global numeroPantalla 
+
+		# pantalla
+		self.pantalla = tk.Entry( self )
+		self.pantalla["textvariable"] = numeroPantalla
+		self.pantalla.grid( row = 1, column = 1, padx = 10, pady = 10, columnspan = 5  )
+		self.pantalla.config(  background = "black", fg = "#03f943", justify = "right" )
+
+		# fila 1
+
+		# boton 7
+		self.boton7 = tk.Button( self )
+		self.boton7["text"] = "7"
+		self.boton7["width"] = 3
+		self.boton7["command"] = lambda: self.capturarNumero( "7" )
+
+		self.boton7.grid( row = 2, column = 1 )
+
+		# boton 8
+		self.boton8 = tk.Button( self )
+		self.boton8["text"] = "8"
+		self.boton8["width"] = 3
+		self.boton8["command"] = lambda: self.capturarNumero( "8" )
+
+		self.boton8.grid( row = 2, column = 2 )
+
+		# boton 9
+		self.boton9 = tk.Button( self )
+		self.boton9["text"] = "9"
+		self.boton9["width"] = 3
+		self.boton9["command"] = lambda: self.capturarNumero( "9" )
+
+		self.boton9.grid( row = 2, column = 3 )
+
+		# boton div
+		self.botonDiv = tk.Button( self )
+		self.botonDiv["text"] = "/"
+		self.botonDiv["width"] = 3
+		self.botonDiv["command"] = lambda: self.operaciones.div( numeroPantalla.get() )
+
+		self.botonDiv.grid( row = 2, column = 4 )
+
+		# boton all clear
+		self.botonAllClear = tk.Button( self )
+		self.botonAllClear["text"] = "AC"
+		self.botonAllClear["width"] = 3
+		self.botonAllClear["height"] = 3
+		self.botonAllClear["command"] = lambda: self.operaciones.allClear( 'allClear' )
+
+		self.botonAllClear.grid( row = 2, column = 5, rowspan = 2 )
+
+		# fila 2
+
+		# boton 4
+		self.boton4 = tk.Button( self )
+		self.boton4["text"] = "4"
+		self.boton4["width"] = 3
+		self.boton4["command"] = lambda: self.capturarNumero( "4" )
+
+		self.boton4.grid( row = 3, column = 1 )
+
+		# boton 5
+		self.boton5 = tk.Button( self )
+		self.boton5["text"] = "5"
+		self.boton5["width"] = 3
+		self.boton5["command"] = lambda: self.capturarNumero( "5" )
+
+		self.boton5.grid( row = 3, column = 2 )
+
+		# boton 6
+		self.boton6 = tk.Button( self )
+		self.boton6["text"] = "6"
+		self.boton6["width"] = 3
+		self.boton6["command"] = lambda: self.capturarNumero( "6" )
+
+		self.boton6.grid( row = 3, column = 3 )
+
+		# boton multiplicar
+		self.botonMulti = tk.Button( self )
+		self.botonMulti["text"] = "x"
+		self.botonMulti["width"] = 3
+		self.botonMulti["command"] = lambda: self.operaciones.multi( numeroPantalla.get() )
+		self.botonMulti.grid( row = 3, column = 4 )
+
+		# fila 3
+
+		# boton 1
+		self.boton1 = tk.Button( self )
+		self.boton1["text"] = "1"
+		self.boton1["width"] = 3
+		self.boton1["command"] = lambda: self.capturarNumero( "1" )
+
+		self.boton1.grid( row = 4, column = 1 )
+
+		# boton 2
+		self.boton2 = tk.Button( self )
+		self.boton2["text"] = "2"
+		self.boton2["width"] = 3
+		self.boton2["command"] = lambda: self.capturarNumero( "2" )
+
+		self.boton2.grid( row = 4, column = 2 )
+
+		# boton 3
+		self.boton3 = tk.Button( self )
+		self.boton3["text"] = "3"
+		self.boton3["width"] = 3
+		self.boton3["command"] = lambda: self.capturarNumero( "3" )
+
+		self.boton3.grid( row = 4, column = 3 )
+
+		# boton resta
+		self.botonResta = tk.Button( self )
+		self.botonResta["text"] = "-"
+		self.botonResta["width"] = 3
+		self.botonResta["command"] = lambda: self.operaciones.resta( numeroPantalla.get() )
+
+		self.botonResta.grid( row = 4, column = 4 )
+
+		# boton clear
+		self.botonClear = tk.Button( self )
+		self.botonClear["text"] = "C"
+		self.botonClear["width"] = 3
+		self.botonClear["height"] = 3
+		self.botonClear["command"] = None
+
+		self.botonClear.grid( row = 4, column = 5, rowspan = 2 )
+
+		# fila 4
+
+		# boton 0
+		self.boton0 = tk.Button( self )
+		self.boton0["text"] = "0"
+		self.boton0["width"] = 3
+		self.boton0["command"] = lambda: self.capturarNumero( "0" )
+
+		self.boton0.grid( row = 5, column = 1 )
+
+		# boton decimal
+		self.botonDecimal = tk.Button( self )
+		self.botonDecimal["text"] = ","
+		self.botonDecimal["width"] = 3
+		self.botonDecimal["command"] = lambda: self.capturarNumero( "," )
+
+		self.botonDecimal.grid( row = 5, column = 2 )
+
+		# boton igual
+		self.botonIgual = tk.Button( self )
+		self.botonIgual["text"] = "="
+		self.botonIgual["width"] = 3
+		self.botonIgual["command"] = lambda: self.operaciones.resolucion()
+
+		self.botonIgual.grid( row = 5, column = 3 )
+
+		# boton suma
+		self.botonSuma = tk.Button( self )
+		self.botonSuma["text"] = "+"
+		self.botonSuma["width"] = 3
+		self.botonSuma["command"] = lambda: self.operaciones.suma( numeroPantalla.get() )
+
+		self.botonSuma.grid( row = 5, column = 4 )
+
+
+# ----------------------------------------------------------------------------------------#
+
+class Operaciones():
+
+	def suma( self, num ):    # suma
+
+		global operacion
+		global resultado
+		global resetPantalla
+
+		resultado += int( num )
+
+		operacion = "suma"
+
+		resetPantalla = True 
 
 		numeroPantalla.set( resultado )
+		
 
-	operacion = "resta"
-	resetPantalla = True
+	def resta( self, num ):	# resta
 
-def multi( num ):
+		global operacion
+		global resultado
+		global resetPantalla
 
-	global operacion
-	global resultado
-	global resetPantalla
+		if resultado == 0:
 
-	if resultado == 0:
+			resultado = int( num )
 
-		resultado = int( num )
+		else:
 
-	else:
+			resultado -= int( num )
 
-		resultado *= int( num )
-
-		numeroPantalla.set( resultado )
-
-	operacion = "multi"
-	resetPantalla = True
-
-def division( num ):
-
-	global operacion
-	global resultado
-	global resetPantalla
-
-	if resultado == 0:
-
-		resultado = float( num )
-
-	else:
-
-		try: 
-
-			resultado /= float( num )
 			numeroPantalla.set( resultado )
 
-		except ZeroDivisionError:
+		operacion = "resta"
+		resetPantalla = True
 
-			numeroPantalla.set( "error de sintaxis" )
 
-
-	operacion = "division"
-	resetPantalla = True
-
-def el_resultado():  # boton igual
-	
-	global resultado
-	global operacion
-
-	if operacion == "suma":
+	def multi( self, num ):	# multiplicacion
 		
-		numeroPantalla.set( resultado + int( numeroPantalla.get() ) )
+		global operacion
+		global resultado
+		global resetPantalla
 
-	elif operacion == "resta":
+		if resultado == 0:
+
+			resultado = int( num )
+
+		else:
+
+			resultado *= int( num )
+
+			numeroPantalla.set( resultado )
+
+		operacion = "multi"
+		resetPantalla = True
+
+
+	def div( self, num ):		# division
 		
-		numeroPantalla.set( resultado - int( numeroPantalla.get() ) )
+		global operacion
+		global resultado
+		global resetPantalla
 
-	elif operacion == "multi":
+		if resultado == 0:
+
+			resultado = float( num )
+
+		else:
+
+			try: 
+
+				resultado /= float( num )
+				numeroPantalla.set( resultado )
+
+			except ZeroDivisionError:
+
+				numeroPantalla.set( "error de sintaxis" )
+
+		operacion = "division"
+		resetPantalla = True
+
+
+	def allClear( self, method ):
+		
+		global operacion
+		global resultado
+		global resetPantalla
+
+		if method == 'allClear':
+
+			numeroPantalla.set( "0" )
+
+			operacion = ""
+			resultado = 0
+			resetPantalla = True
+
+		else:
+			pass
+
+
+	def resolucion( self ):
+
+		global resultado
+		global operacion
+
+		if operacion == "suma":
+		
+			numeroPantalla.set( resultado + int( numeroPantalla.get() ) )
+
+		elif operacion == "resta":
+		
+			numeroPantalla.set( resultado - int( numeroPantalla.get() ) )
+
+		elif operacion == "multi":
 		 
 		 numeroPantalla.set( resultado * int( numeroPantalla.get() ) )
 
-	elif operacion == "division":
+		elif operacion == "division":
 
-		try:
+			try:
 
-			numeroPantalla.set( resultado / float( numeroPantalla.get() ) )
+				numeroPantalla.set( resultado / float( numeroPantalla.get() ) )
 
-		except ZeroDivisionError:
+			except ZeroDivisionError:
 
-			numeroPantalla.set( "error de sintaxis" )
+				numeroPantalla.set( "error de sintaxis" )
 
-	resultado = 0
-	operacion = ""
-
-
-def clear( nameMethod ):  # clear y allclear
-
-	global operacion
-	global resetPantalla
-	global resultado
-
-	if nameMethod == "allclear":   # limpia toda la operacion
-
-		numeroPantalla.set( "0" )
-
-		operacion = ""
-		resetPantalla = True
 		resultado = 0
+		operacion = ""
 
-	else:
-		return
+# ---------------------------------------------------------------------------- #
 
-# -------------- Fila 1 --------------------- #
+root = tk.Tk()
+root.title( "Calculadora Python" )
 
-boton7 = Button( frame, text = "7", width = 3, command = lambda:numeroPulsado( "7" ) )
-boton7.grid( row = 2, column = 1 )
+# variables globales
+numeroPantalla = tk.StringVar()
+numeroPantalla.set( "0" )
 
-boton8 = Button( frame, text = "8", width = 3,  command = lambda:numeroPulsado( "8" ) )
-boton8.grid( row = 2, column = 2 )
+operacion = ""
 
-boton9 = Button( frame, text = "9", width = 3,  command = lambda:numeroPulsado( "9" ) )
-boton9.grid( row = 2, column = 3 )
+resultado = 0
 
-botonDiv = Button( frame, text = "/", width = 3, command = lambda:division( numeroPantalla.get() ) )
-botonDiv.grid( row = 2, column = 4 )
+resetPantalla = True
 
-botonAllClear = Button( 
-	frame, 
-	text = "AC", 
-	width = 3, 
-	height = 3, 
-	command = lambda:clear( 'allclear' )  
-)
+# inicio de la aplicacion
+app = AppCalculadora( master = root )
 
-botonAllClear.grid( row = 2, column = 5, rowspan = 2 )
-
-
-# -------------- Fila 2 --------------------- #
-
-boton4 = Button( frame, text = "4", width = 3, command = lambda:numeroPulsado( "4" ) )
-boton4.grid( row = 3, column = 1 )
-
-boton5 = Button( frame, text = "5", width = 3, command = lambda:numeroPulsado( "5" ) )
-boton5.grid( row = 3, column = 2 )
-
-boton6 = Button( frame, text = "6", width = 3, command = lambda:numeroPulsado( "6" ) )
-boton6.grid( row = 3, column = 3 )
-
-botonMulti = Button( frame, text = "x", width = 3, command = lambda:multi( numeroPantalla.get() ))
-botonMulti.grid( row = 3, column = 4 )
-
-# -------------- Fila 3 --------------------- #
-
-boton1 = Button( frame, text = "1", width = 3, command = lambda:numeroPulsado( "1" ) )
-boton1.grid( row = 4, column = 1 )
-
-boton2 = Button( frame, text = "2", width = 3, command = lambda:numeroPulsado( "2" ) )
-boton2.grid( row = 4, column = 2 )
-
-boton3 = Button( frame, text = "3", width = 3, command = lambda:numeroPulsado( "3" ) )
-boton3.grid( row = 4, column = 3 )
-
-botonRest = Button( frame, text = "-", width = 3, command = lambda:resta( numeroPantalla.get() ) )
-botonRest.grid( row = 4, column = 4 )
-
-botonAllClear = Button( 
-	frame, 
-	text = "C", 
-	width = 3, 
-	height = 3, 
-	command = lambda:clear()  
-)
-
-botonAllClear.grid( row = 4, column = 5, rowspan = 2 )
-
-# -------------- Fila 4 --------------------- #
-
-boton0 = Button( frame, text = "0", width = 3, command = lambda:numeroPulsado( "0" ) )
-boton0.grid( row = 5, column = 1 )
-
-botonComa = Button( frame, text = ",", width = 3, command = lambda:numeroPulsado( "," ) )
-botonComa.grid( row = 5, column = 2 )
-
-botonIgual = Button( frame, text = "=", width = 3, command = lambda:el_resultado() )
-botonIgual.grid( row = 5, column = 3 )
-
-botonSuma = Button( frame, text = "+", width = 3, command = lambda:suma( numeroPantalla.get() ) )
-botonSuma.grid( row = 5, column = 4 )
-
-# loop infinito
-app.mainloop()
+app.mainloop()		
