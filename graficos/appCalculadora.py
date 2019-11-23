@@ -1,119 +1,19 @@
 from tkinter import *
 
-# --------- Pulsaciones Teclado --------------#
-
-def numeroPulsado( numero ):
-	
-	global variableTemporal
-	global operacionAlmacenada
-
-	cerosIzquierda()	
-
-	if variableTemporal != '':  # chequea la operacion
-
-		numeroPantalla.set( numero )
-		operacionAlmacenada = variableTemporal
-
-		variableTemporal = ''
-
-	else:
-
-		numeroPantalla.set( numeroPantalla.get() + numero )
-
-
-def cerosIzquierda():  # evalua los ceros a la izquierda
-
-	if numeroPantalla.get() == "0":
-
-		numeroPantalla.set( "" )
-
-	else: 
-
-		return
-
-# ----------------------------------------------#
-
-def suma( num ): 	# suma
-	
-	global variableTemporal
-	global resultado
-
-	resultado += int( num )
-
-	variableTemporal = "suma" 
-
-	# aparece el resultado en pantalla
-	numeroPantalla.set( resultado )
-
-def multi( num ):	# multiplicacion
-	pass
-
-def resta( num ):
-	pass
-
-def division( num ):
-	pass
-
-# ------------- El resultado ------------------ #
-
-def el_resultado():
-	
-	global resultado
-	global operacionAlmacenada
-
-	if operacionAlmacenada == "suma":
-		
-		numeroPantalla.set( resultado + int( numeroPantalla.get() ) )
-
-	elif operacionAlmacenada == "resta":
-		
-		numeroPantalla.set( resultado - int( numeroPantalla.get() ) )
-
-	elif operacionAlmacenada == "multi":
-		 
-		 numeroPantalla.set( resultado * int( numeroPantalla.get() ) )
-
-	elif operacionAlmacenada == "division":
-
-		numeroPantalla.set( resultado / int( numeroPantalla.get() ) )
-
-	# vacia las variables
-	operacionAlmacenada = ""
-	resultado = 0
-
-
-# ----------------- Clear ---------------------#
-
-def clear( method ):
-
-	global resultado
-	global operacionAlmacenada
-	global variableTemporal 
-
-	if method == 'allclear':
-
-		operacionAlmacenada = ""
-		variableTemporal = ""
-
-		resultado = 0
-
-		numeroPantalla.set( "0" )
-
-
-# --------- Calculadora ---------------------- #
+# --------- Calculadora app ---------------------- #
 
 # frame
-root = Tk()
+app = Tk()
 
-root.title( "Calculadora Python" )
+app.title( "Calculadora Python" )
 
-frame = Frame( root )
+frame = Frame( app )
 frame.pack()
 
-# variables globales
-variableTemporal = ""
-operacionAlmacenada = ""
+# ------------- variables globales ----------- #
 
+operacion = ""
+resetPantalla = True
 resultado = 0
 
 # -------------- Pantalla ------------------ #
@@ -127,6 +27,148 @@ pantalla.config( background = "black", fg = "#03f943", justify = "right" )
 
 # columnspan toma 4 posiciones de la grilla
 
+# --------- Pulsaciones Teclado --------------#
+
+def numeroPulsado( num ):
+	
+	global operacion
+	global resetPantalla
+
+	if resetPantalla:
+
+		numeroPantalla.set( num )
+		resetPantalla = False
+
+	else:
+
+		numeroPantalla.set( numeroPantalla.get() + num )
+
+
+def suma( num ): 	# suma
+	
+	global operacion
+	global resultado
+	global resetPantalla
+
+	resultado += int( num )
+
+	operacion = "suma"
+
+	resetPantalla = True 
+
+	numeroPantalla.set( resultado )
+
+def resta( num ):  # resta
+
+	global operacion
+	global resultado
+	global resetPantalla
+
+	if resultado == 0:
+
+		resultado = int( num )
+
+	else:
+
+		resultado -= int( num )
+
+		numeroPantalla.set( resultado )
+
+	operacion = "resta"
+	resetPantalla = True
+
+def multi( num ):
+
+	global operacion
+	global resultado
+	global resetPantalla
+
+	if resultado == 0:
+
+		resultado = int( num )
+
+	else:
+
+		resultado *= int( num )
+
+		numeroPantalla.set( resultado )
+
+	operacion = "multi"
+	resetPantalla = True
+
+def division( num ):
+
+	global operacion
+	global resultado
+	global resetPantalla
+
+	if resultado == 0:
+
+		resultado = float( num )
+
+	else:
+
+		try: 
+
+			resultado /= float( num )
+			numeroPantalla.set( resultado )
+
+		except ZeroDivisionError:
+
+			numeroPantalla.set( "error de sintaxis" )
+
+
+	operacion = "division"
+	resetPantalla = True
+
+def el_resultado():  # boton igual
+	
+	global resultado
+	global operacion
+
+	if operacion == "suma":
+		
+		numeroPantalla.set( resultado + int( numeroPantalla.get() ) )
+
+	elif operacion == "resta":
+		
+		numeroPantalla.set( resultado - int( numeroPantalla.get() ) )
+
+	elif operacion == "multi":
+		 
+		 numeroPantalla.set( resultado * int( numeroPantalla.get() ) )
+
+	elif operacion == "division":
+
+		try:
+
+			numeroPantalla.set( resultado / float( numeroPantalla.get() ) )
+
+		except ZeroDivisionError:
+
+			numeroPantalla.set( "error de sintaxis" )
+
+	resultado = 0
+	operacion = ""
+
+
+def clear( nameMethod ):  # clear y allclear
+
+	global operacion
+	global resetPantalla
+	global resultado
+
+	if nameMethod == "allclear":   # limpia toda la operacion
+
+		numeroPantalla.set( "0" )
+
+		operacion = ""
+		resetPantalla = True
+		resultado = 0
+
+	else:
+		return
+
 # -------------- Fila 1 --------------------- #
 
 boton7 = Button( frame, text = "7", width = 3, command = lambda:numeroPulsado( "7" ) )
@@ -138,7 +180,7 @@ boton8.grid( row = 2, column = 2 )
 boton9 = Button( frame, text = "9", width = 3,  command = lambda:numeroPulsado( "9" ) )
 boton9.grid( row = 2, column = 3 )
 
-botonDiv = Button( frame, text = "/", width = 3 )
+botonDiv = Button( frame, text = "/", width = 3, command = lambda:division( numeroPantalla.get() ) )
 botonDiv.grid( row = 2, column = 4 )
 
 botonAllClear = Button( 
@@ -204,5 +246,5 @@ botonIgual.grid( row = 5, column = 3 )
 botonSuma = Button( frame, text = "+", width = 3, command = lambda:suma( numeroPantalla.get() ) )
 botonSuma.grid( row = 5, column = 4 )
 
-
-root.mainloop()
+# loop infinito
+app.mainloop()
