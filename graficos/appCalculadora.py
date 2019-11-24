@@ -153,7 +153,7 @@ class AppCalculadora( tk.Frame ):
 		self.botonClear["text"] = "C"
 		self.botonClear["width"] = 3
 		self.botonClear["height"] = 3
-		self.botonClear["command"] = None
+		self.botonClear["command"] = lambda: self.operaciones.allClear( 'clear' )
 
 		self.botonClear.grid( row = 4, column = 5, rowspan = 2 )
 
@@ -169,9 +169,9 @@ class AppCalculadora( tk.Frame ):
 
 		# boton decimal
 		self.botonDecimal = tk.Button( self )
-		self.botonDecimal["text"] = ","
+		self.botonDecimal["text"] = "."
 		self.botonDecimal["width"] = 3
-		self.botonDecimal["command"] = lambda: self.capturarNumero( "," )
+		self.botonDecimal["command"] = lambda: self.capturarNumero( "." )
 
 		self.botonDecimal.grid( row = 5, column = 2 )
 
@@ -202,12 +202,18 @@ class Operaciones():
 		global resultado
 		global resetPantalla
 
-		resultado += int( num )
+		if self.__isDecimal( num ) == "entero":
+			resultado += int( num )
 
+			
+		elif self.__isDecimal( num ) == "decimal":
+			resultado += float( num )
+
+		else:
+			return
+		
 		operacion = "suma"
-
 		resetPantalla = True 
-
 		numeroPantalla.set( resultado )
 		
 
@@ -216,16 +222,29 @@ class Operaciones():
 		global operacion
 		global resultado
 		global resetPantalla
+		
+		if self.__isDecimal( num ) == "entero":
+			
+			if resultado == 0:
+				resultado = int( num )
 
-		if resultado == 0:
-
-			resultado = int( num )
-
-		else:
-
-			resultado -= int( num )
+			else:
+				resultado -= int( num )
 
 			numeroPantalla.set( resultado )
+			
+		elif self.__isDecimal( num ) == "decimal":
+
+			if resultado == 0:
+				resultado = float( num )
+
+			else:
+				resultado -= float( num )
+
+			numeroPantalla.set( resultado )
+			
+		else:
+			return
 
 		operacion = "resta"
 		resetPantalla = True
@@ -237,21 +256,29 @@ class Operaciones():
 		global resultado
 		global resetPantalla
 
-		if resultado == 0:
+		if self.__isDecimal( num ) == "decimal":
 
-			resultado = int( num )
+			if resultado == 0:
+				resultado = float( num )
 
-		else:
+			else:
+				resultado *= float( num )
+				numeroPantalla.set( resultado )
 
-			resultado *= int( num )
+		elif self.__isDecimal( num ) == "entero":
 
-			numeroPantalla.set( resultado )
+			if resultado == 0:
+				resultado = int( num )
+
+			else:
+				resultado *= int( num )
+				numeroPantalla.set( resultado )
 
 		operacion = "multi"
 		resetPantalla = True
 
 
-	def div( self, num ):		# division
+	def div( self, num ):	# division
 		
 		global operacion
 		global resultado
@@ -271,6 +298,7 @@ class Operaciones():
 			except ZeroDivisionError:
 
 				numeroPantalla.set( "error de sintaxis" )
+				resetPantalla = True
 
 		operacion = "division"
 		resetPantalla = True
@@ -291,43 +319,103 @@ class Operaciones():
 			resetPantalla = True
 
 		else:
-			pass
+			
+			cadenaNumero = numeroPantalla.get()
+			nuevaCadena = ""
+			limite = len( cadenaNumero  ) - 1
 
+			if cadenaNumero != "0":
+
+				for digito in range( limite ):
+					nuevaCadena += cadenaNumero[ digito ]
+				
+				if nuevaCadena != "":
+					numeroPantalla.set( nuevaCadena )
+			
+				else:
+					numeroPantalla.set( "0" )
+					resetPantalla = True
+			
+			else:
+				return
 
 	def resolucion( self ):
 
 		global resultado
 		global operacion
+		global resetPantalla
 
 		if operacion == "suma":
-		
-			numeroPantalla.set( resultado + int( numeroPantalla.get() ) )
 
+			if self.__isDecimal( numeroPantalla.get() ) == "decimal":
+				numeroPantalla.set( float( resultado ) + float( numeroPantalla.get() ) )
+			
+			elif self.__isDecimal( numeroPantalla.get() ) == "entero":
+				numeroPantalla.set( int( resultado ) + int( numeroPantalla.get() ) )
+
+			else:
+				return
+			
 		elif operacion == "resta":
-		
-			numeroPantalla.set( resultado - int( numeroPantalla.get() ) )
+
+			if self.__isDecimal( numeroPantalla.get() ) == "decimal":
+				numeroPantalla.set( float( resultado ) - float( numeroPantalla.get() ) )
+			
+			elif self.__isDecimal( numeroPantalla.get() ) == "entero":
+				numeroPantalla.set( int( resultado ) - int( numeroPantalla.get() ) )
+
+			else:
+				return
 
 		elif operacion == "multi":
+
+			if self.__isDecimal( numeroPantalla.get() ) == "decimal":
+				numeroPantalla.set( float( resultado ) * float( numeroPantalla.get() ) )
+			
+			elif self.__isDecimal( numeroPantalla.get() ) == "entero":
+				numeroPantalla.set( int( resultado ) * int( numeroPantalla.get() ) )
+
+			else:
+				return
 		 
-		 numeroPantalla.set( resultado * int( numeroPantalla.get() ) )
 
 		elif operacion == "division":
 
 			try:
-
-				numeroPantalla.set( resultado / float( numeroPantalla.get() ) )
+				numeroPantalla.set( float( resultado ) / float( numeroPantalla.get() ) )
 
 			except ZeroDivisionError:
 
 				numeroPantalla.set( "error de sintaxis" )
+				resetPantalla = True
+
 
 		resultado = 0
 		operacion = ""
 
+	
+	# funcion de identificacion de decimales
+	def __isDecimal( self, num ):
+		
+		global resetPantalla
+
+		if num.count('.') >= 2 or num.find('.') == 0 or num.endswith('.'):
+			
+			numeroPantalla.set( "error de sintaxis" )
+			resetPantalla = True
+		
+		elif num.count( '.' ) == 1:
+
+			return "decimal"
+				
+		else:
+
+			return "entero"
+
 # ---------------------------------------------------------------------------- #
 
 root = tk.Tk()
-root.title( "Calculadora Python" )
+root.title( "Calculadora" )
 
 # variables globales
 numeroPantalla = tk.StringVar()
