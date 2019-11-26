@@ -125,3 +125,7 @@ load(): carga de datos del binario externo
 
 30.- Interfaces graficas: recuerda instalar el paquete python3-tk para emular los
 paquetes. apt-get python3-tk
+
+31.- Existen multitudes de componentes para la conexion de Bases de datos en Python 
+SqlLite, Mysql, Postgresql etc.
+
