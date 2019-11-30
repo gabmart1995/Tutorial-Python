@@ -19,6 +19,7 @@ class Operations():
 			entry.set( "" )
 
 		self.textArea.delete( "1.0", END )
+		self.dataBase.records = []
 
 	def getData( self, method ):
 		
@@ -32,10 +33,25 @@ class Operations():
 		self.dataBase.data = data
 		self.dataBase.connectBD( method )
 
-		data = [] 
-		commentary = ""
+		if ( method == "create" or method == "delete" ):
+			self.clear() 
 
-		self.clear() 
+		elif ( method == "read" ):
+			self.__setDataSelect()
+
+		data = [] 
+
+
+	def __setDataSelect( self ):
+		
+		for usuario in self.dataBase.records:
+
+			self.textEntry[0].set( usuario[0] )
+			self.textEntry[1].set( usuario[1] )
+			self.textEntry[2].set( usuario[2] )
+			self.textEntry[3].set( usuario[3] )
+			self.textEntry[4].set( usuario[4] )
+			self.textArea.insert( "1.0", usuario[5] )
 
 
 class AppComponent( Operations ):
@@ -84,13 +100,13 @@ class AppComponent( Operations ):
 
 		crudMenu = Menu( barraMenu, tearoff = 0 )
 		crudMenu.add_command( label = "Crear", command = lambda: self.getData( "create" ) )
-		crudMenu.add_command( label = "Leer" )
-		crudMenu.add_command( label = "Actualizar" )
-		crudMenu.add_command( label = "Borrar" )
+		crudMenu.add_command( label = "Leer", command = lambda: self.getData( "read" ) )
+		crudMenu.add_command( label = "Actualizar", command = lambda: self.getData( "update" ) )
+		crudMenu.add_command( label = "Borrar", command = lambda: self.getData( "delete" ) )
 
 		ayudaMenu = Menu( barraMenu, tearoff = 0 )
-		ayudaMenu.add_command( label = "Licencia" )
-		ayudaMenu.add_command( label = "Acerca de ..." )
+		ayudaMenu.add_command( label = "Licencia", command = self.messages.avisoLicencia )
+		ayudaMenu.add_command( label = "Acerca de ...", command = self.messages.infoSoftware )
 
 		# cascade
 		barraMenu.add_cascade( label = "BBDD", menu = bdMenu )
@@ -159,13 +175,13 @@ class AppComponent( Operations ):
 		createButton = Button( self.frameButtons, text = "Crear", command = lambda: self.getData( "create" ) )
 		createButton.grid( row = 0, column = 0, sticky = "e", padx = 10, pady = 10 )
 
-		readButton = Button( self.frameButtons, text = "Leer" )
+		readButton = Button( self.frameButtons, text = "Leer", command = lambda: self.getData( "read" ) )
 		readButton.grid( row = 0, column = 1, sticky = "e", padx = 10, pady = 10 )
 
-		updateButton = Button( self.frameButtons, text = "Actualizar" )
+		updateButton = Button( self.frameButtons, text = "Actualizar", command = lambda: self.getData( "update" ) )
 		updateButton.grid( row = 0, column = 2, sticky = "e", padx = 10, pady = 10 )
 
-		deleteButton = Button( self.frameButtons, text = "Borrar" )
+		deleteButton = Button( self.frameButtons, text = "Eliminar", command = lambda: self.getData( "delete" ) )
 		deleteButton.grid( row = 0, column = 3, sticky = "e", padx = 10, pady = 10 )
 
 

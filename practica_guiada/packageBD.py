@@ -8,25 +8,31 @@ class DataBase():
 		self.__sql = ""
 		self.conexion = None
 		self.__puntero = None
-		self.data = []
+		self.data = []  	
+		self.records = []
 		self.messages = Messages()
 		
  
 	def connectBD( self, method ):
 
 		self.conexion = sqlite3.connect( "Usuarios" )
-
 		self.puntero = self.conexion.cursor()
 
 		if method == "createBD":
-
 			self.__createTable()
 
 		elif method == "create":
-
 			self.__createUser()
 
-		
+		elif method == "read":
+			self.__readUser()
+
+		elif method == "update":
+			self.__updateUser()
+
+		else:
+			self.__deleteUser()
+
 	def __createTable( self ):
 
 		self.__sql = '''
@@ -44,7 +50,6 @@ class DataBase():
 		try:
 
 			self.puntero.execute( self.__sql )
-
 			self.messages.showInfoCreateDB()
 
 		except:
@@ -53,7 +58,7 @@ class DataBase():
 
 		finally:
 
-			self.closeConexion()
+			self.__closeConexion()
 
 	def __createUser( self ):
 		
@@ -75,10 +80,67 @@ class DataBase():
 			
 		finally:
 
-			self.closeConexion()
+			self.__closeConexion()
 
 
-	def closeConexion( self ):
+	def __updateUser( self ):
+
+		datosUsuarios = self.data[1], self.data[2], self.data[3], self.data[4], self.data[5]
+		idUser = self.data[0]
+
+		self.__sql = "UPDATE DatosUsuarios SET nombreUsuario = ?, password = ?, apellido = ?, direccion = ?,comentario = ? WHERE id = "
+		self.__sql += idUser + ";"
+
+		try:
+
+			self.puntero.execute( self.__sql, datosUsuarios )
+			self.conexion.commit()
+			self.messages.showInfoUpdate()
+
+		except:
+			self.messages.showWarningUpdate()
+			
+		finally:
+			self.__closeConexion()
+
+
+	def __readUser( self ):
+
+		idUser = self.data[0]
+
+		self.__sql = "SELECT * FROM DatosUsuarios WHERE id =" + idUser
+
+
+		self.puntero.execute( self.__sql )
+		self.records = self.puntero.fetchall()
+
+		if self.records == []:
+			self.messages.showWarningID()
+
+		self.conexion.commit()
+	
+		self.__closeConexion()
+
+	def  __deleteUser( self ):
+
+		idUser = self.data[0]
+
+		self.__sql = "DELETE FROM DatosUsuarios WHERE id =" + idUser
+
+		try:
+			
+			self.puntero.execute( self.__sql )
+			self.conexion.commit()
+			self.messages.showInfoDelete()
+
+		except:
+			self.messages.showWarningDelete()
+
+		finally: 
+			self.__closeConexion()
+
+	def __closeConexion( self ):
 
 		self.puntero.close()
 		self.__sql = ""
+		self.data = []
