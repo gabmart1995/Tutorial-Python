@@ -156,7 +156,7 @@ class AppComponent( Operations ):
 		self.frameButtons = Frame( self.root )
 		self.frameButtons.pack()
 
-		createButton = Button( self.frameButtons, text = "Crear", command = lambda: self.operations.getData( "create" ) )
+		createButton = Button( self.frameButtons, text = "Crear", command = lambda: self.getData( "create" ) )
 		createButton.grid( row = 0, column = 0, sticky = "e", padx = 10, pady = 10 )
 
 		readButton = Button( self.frameButtons, text = "Leer" )
