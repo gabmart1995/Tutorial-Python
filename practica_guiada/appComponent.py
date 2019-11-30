@@ -2,14 +2,50 @@ from tkinter import *
 from packageBD import DataBase
 from packageMessages import Messages
 
-class AppComponent():
+class Operations():
 
 	def __init__( self ):
 
+		self.textArea = None
+
+		self.textEntry = []
+
+		self.dataBase = DataBase()
+		self.messages = Messages()
+
+	def clear( self ):
+
+		for entry in self.textEntry:
+			entry.set( "" )
+
+		self.textArea.delete( "1.0", END )
+
+	def getData( self, method ):
+		
+		data = []
+
+		for entry in self.textEntry:
+			data.append( entry.get() )
+
+		data.append( self.textArea.get( "1.0", END ) )
+
+		self.dataBase.data = data
+		self.dataBase.connectBD( method )
+
+		data = [] 
+		commentary = ""
+
+		self.clear() 
+
+
+class AppComponent( Operations ):
+
+	def __init__( self ):
+
+		super().__init__()
+
 		self.root = Tk()
 		self.root.title( "Aplicacion CRUD" )
-
-		self.operations = Operations()
 
 		self.__setVariables()
 		self.__createMenu()
@@ -26,7 +62,7 @@ class AppComponent():
 		password = StringVar()
 		direction = StringVar()
 
-		self.operations.textEntry.extend([ idUser, name, lastName, password, direction ])
+		self.textEntry.extend([ idUser, name, lastName, password, direction ])
 
 
 	def __createMenu( self ):
@@ -39,15 +75,15 @@ class AppComponent():
 		self.root["height"] = 300
 
 		bdMenu = Menu( barraMenu, tearoff = 0 )
-		bdMenu.add_command( label = "Conectar", command = lambda : self.operations.dataBase.connectBD( "createBD" ) )
+		bdMenu.add_command( label = "Conectar", command = lambda : self.dataBase.connectBD( "createBD" ) )
 		bdMenu.add_separator()
 		bdMenu.add_command( label = "Salir", command = self.__closeApp )
 
 		borrarMenu = Menu( barraMenu, tearoff = 0 )
-		borrarMenu.add_command( label = "Borrar campos", command = self.operations.clear )
+		borrarMenu.add_command( label = "Borrar campos", command = self.clear )
 
 		crudMenu = Menu( barraMenu, tearoff = 0 )
-		crudMenu.add_command( label = "Crear", command = lambda: self.operations.getData( "create" ) )
+		crudMenu.add_command( label = "Crear", command = lambda: self.getData( "create" ) )
 		crudMenu.add_command( label = "Leer" )
 		crudMenu.add_command( label = "Actualizar" )
 		crudMenu.add_command( label = "Borrar" )
@@ -67,20 +103,20 @@ class AppComponent():
 		self.frameForm = Frame( self.root )
 		self.frameForm.pack()
 
-		textId = Entry( self.frameForm, textvariable = self.operations.textEntry[0] )
+		textId = Entry( self.frameForm, textvariable = self.textEntry[0] )
 		textId.grid( row = 0, column = 1, padx = 10, pady = 10 )
 
-		textName = Entry( self.frameForm, textvariable = self.operations.textEntry[1] )
+		textName = Entry( self.frameForm, textvariable = self.textEntry[1] )
 		textName.grid( row = 1, column = 1, padx = 10, pady = 10 )
 
-		textPassword = Entry( self.frameForm, textvariable = self.operations.textEntry[2] )
+		textPassword = Entry( self.frameForm, textvariable = self.textEntry[2] )
 		textPassword.grid( row = 2, column = 1, padx = 10, pady = 10 )
 		textPassword.config( show = "*" )
 
-		textLastName = Entry( self.frameForm, textvariable = self.operations.textEntry[3] )
+		textLastName = Entry( self.frameForm, textvariable = self.textEntry[3] )
 		textLastName.grid( row = 3, column = 1, padx = 10, pady = 10 )
 	
-		textDirection = Entry( self.frameForm, textvariable =  self.operations.textEntry[4] )
+		textDirection = Entry( self.frameForm, textvariable =  self.textEntry[4] )
 		textDirection.grid( row = 4, column = 1, padx = 10, pady = 10 )
 
 		textArea = Text( self.frameForm, width = 16, height = 5 )
@@ -91,7 +127,7 @@ class AppComponent():
 
 		textArea.config( yscrollcommand = scrollVert.set )
 
-		self.operations.textArea = textArea
+		self.textArea = textArea
 	
 
 	def __createLabels( self ):
@@ -135,49 +171,14 @@ class AppComponent():
 
 	def __closeApp( self ):
 
-		opcion = self.operations.messages.getInfoClose()
+		opcion = self.messages.getInfoClose()
 
 		if opcion == "yes":
 			self.root.destroy()
 
 
 	def loop( self ):
+		
 		self.root.mainloop()
 
 
-class Operations():
-
-	def __init__( self ):
-
-		self.textArea = None
-
-		self.textEntry = []
-
-		self.dataBase = DataBase()
-		self.messages = Messages()
-
-	def clear( self ):
-
-		for entry in self.textEntry:
-			entry.set( "" )
-
-		self.textArea.delete( 1.0, END )
-
-	def getData( self, method ):
-		
-		data = []
-
-		for entry in self.textEntry:
-			data.append( entry.get() )
-
-		data.append( self.textArea.get( "1.0", END ) )
-
-		# se le envia la data a la conexion de la BD
-		self.dataBase.data = data
-		self.dataBase.connectBD( method )
-
-		# vacia los campos y variables
-		data = [] 
-		commentary = ""
-
-		self.clear()
