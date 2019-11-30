@@ -1,5 +1,5 @@
 from tkinter import *
-from packageBD import DataBase 
+from packageBD import DataBase
 from packageMessages import Messages
 
 class AppComponent():
@@ -181,8 +181,3 @@ class Operations():
 		commentary = ""
 
 		self.clear()
-
-# ----------------------------------------------------------- #
-
-app = AppComponent()
-app.loop()

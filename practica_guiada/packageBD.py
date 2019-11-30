@@ -66,7 +66,7 @@ class DataBase():
 			
 			self.puntero.execute( self.__sql, self.data )
 			self.conexion.commit()
-			
+
 			self.messages.showInfoInsert()
 
 		except: 
@@ -82,5 +82,3 @@ class DataBase():
 
 		self.puntero.close()
 		self.__sql = ""
-
-	
