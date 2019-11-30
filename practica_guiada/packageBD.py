@@ -6,31 +6,28 @@ class DataBase():
 	def __init__( self ):
 
 		self.__sql = ""
+		self.conexion = None
 		self.__puntero = None
+		self.data = []
 		self.messages = Messages()
+		
+ 
+	def connectBD( self, method ):
 
+		self.conexion = sqlite3.connect( "Usuarios" )
 
-	def connectBD( self ):
+		self.puntero = self.conexion.cursor()
 
-		conexion = sqlite3.connect( "Usuarios" )
+		if method == "createBD":
 
-		self.puntero = conexion.cursor()
+			self.__createTable()
 
-		try:
+		elif method == "create":
 
-			self.createTable()
-			self.messages.showInfoCreateDB()
+			self.__createUser()
 
-		except:
-
-			self.messages.showInfoIsDBExists()
-
-		finally:
-
-			self.closeConexion()
-
-
-	def createTable( self ):
+		
+	def __createTable( self ):
 
 		self.__sql = '''
 
@@ -44,9 +41,46 @@ class DataBase():
 			);
 		'''
 
-		self.puntero.execute( self.__sql )
+		try:
+
+			self.puntero.execute( self.__sql )
+
+			self.messages.showInfoCreateDB()
+
+		except:
+
+			self.messages.showInfoIsDBExists()
+
+		finally:
+
+			self.closeConexion()
+
+	def __createUser( self ):
+		
+		# remueve el id
+		self.data.remove( self.data[0] )
+
+		self.__sql = "INSERT INTO DatosUsuarios VALUES ( NULL, ?, ?, ?, ?, ? );"
+
+		try:
+			
+			self.puntero.execute( self.__sql, self.data )
+			self.conexion.commit()
+			
+			self.messages.showInfoInsert()
+
+		except: 
+
+			self.messages.showWarningInsert()
+			
+		finally:
+
+			self.closeConexion()
 
 
 	def closeConexion( self ):
 
 		self.puntero.close()
+		self.__sql = ""
+
+	

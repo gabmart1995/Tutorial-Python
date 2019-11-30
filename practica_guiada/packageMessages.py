@@ -14,3 +14,11 @@ class Messages():
 
 		valor = messagebox.askquestion( "Salir", "¿Deseas salir de la aplicación?")
 		return valor
+
+	def showInfoInsert( self ):
+
+		messagebox.showinfo( "BBDD", "Registro insertado con éxito" )
+
+	def showWarningInsert( self ):
+
+		messagebox.showwarning( "¡Atención!", "Error al insertar" )

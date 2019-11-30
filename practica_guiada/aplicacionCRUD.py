@@ -11,6 +11,7 @@ class AppComponent():
 
 		self.operations = Operations()
 
+		self.__setVariables()
 		self.__createMenu()
 		self.__createForm()
 		self.__createLabels()
@@ -38,7 +39,7 @@ class AppComponent():
 		self.root["height"] = 300
 
 		bdMenu = Menu( barraMenu, tearoff = 0 )
-		bdMenu.add_command( label = "Conectar", command = self.operations.dataBase.connectBD )
+		bdMenu.add_command( label = "Conectar", command = lambda : self.operations.dataBase.connectBD( "createBD" ) )
 		bdMenu.add_separator()
 		bdMenu.add_command( label = "Salir", command = self.__closeApp )
 
@@ -46,7 +47,7 @@ class AppComponent():
 		borrarMenu.add_command( label = "Borrar campos", command = self.operations.clear )
 
 		crudMenu = Menu( barraMenu, tearoff = 0 )
-		crudMenu.add_command( label = "Crear" )
+		crudMenu.add_command( label = "Crear", command = lambda: self.operations.getData( "create" ) )
 		crudMenu.add_command( label = "Leer" )
 		crudMenu.add_command( label = "Actualizar" )
 		crudMenu.add_command( label = "Borrar" )
@@ -65,8 +66,6 @@ class AppComponent():
 
 		self.frameForm = Frame( self.root )
 		self.frameForm.pack()
-
-		self.__setVariables()
 
 		textId = Entry( self.frameForm, textvariable = self.operations.textEntry[0] )
 		textId.grid( row = 0, column = 1, padx = 10, pady = 10 )
@@ -121,7 +120,7 @@ class AppComponent():
 		self.frameButtons = Frame( self.root )
 		self.frameButtons.pack()
 
-		createButton = Button( self.frameButtons, text = "Crear" )
+		createButton = Button( self.frameButtons, text = "Crear", command = lambda: self.operations.getData( "create" ) )
 		createButton.grid( row = 0, column = 0, sticky = "e", padx = 10, pady = 10 )
 
 		readButton = Button( self.frameButtons, text = "Leer" )
@@ -160,11 +159,28 @@ class Operations():
 	def clear( self ):
 
 		for entry in self.textEntry:
-			
 			entry.set( "" )
 
-		self.textArea.delete( 1.0, END )	
+		self.textArea.delete( 1.0, END )
 
+	def getData( self, method ):
+		
+		data = []
+
+		for entry in self.textEntry:
+			data.append( entry.get() )
+
+		data.append( self.textArea.get( "1.0", END ) )
+
+		# se le envia la data a la conexion de la BD
+		self.dataBase.data = data
+		self.dataBase.connectBD( method )
+
+		# vacia los campos y variables
+		data = [] 
+		commentary = ""
+
+		self.clear()
 
 # ----------------------------------------------------------- #
 
