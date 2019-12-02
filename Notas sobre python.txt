@@ -129,3 +129,14 @@ paquetes. apt-get python3-tk
 31.- Existen multitudes de componentes para la conexion de Bases de datos en Python 
 SqlLite, Mysql, Postgresql etc.
 
+32.- las funciones lambda permiten crear funciones de codigo que pueden retornar
+valores en una linea de codigo
+
+33.- La funcion filter forma parte de un grupo de funciones que se denomina funciones
+de orden superior y nos permite utilizar un paradigma nuevo conocido como programación
+funcional. Verifica los elementos de una secuencia cumplen una condicion devolviendo un 
+iterador que cumplen con dicha condicion
+
+34.- Map: aplica una funcion a cada elemento de la lista iterable devolviendo una lista
+con los resultados
+
