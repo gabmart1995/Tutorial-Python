@@ -140,3 +140,6 @@ iterador que cumplen con dicha condicion
 34.- Map: aplica una funcion a cada elemento de la lista iterable devolviendo una lista
 con los resultados
 
+35.- Las expresiones regulares son una secuencia de caracteres que forman un patron de
+busqueda, para el trabajo y el procesamiento de texto incluye los metacaracteres.  
+
