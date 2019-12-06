@@ -141,5 +141,7 @@ iterador que cumplen con dicha condicion
 con los resultados
 
 35.- Las expresiones regulares son una secuencia de caracteres que forman un patron de
-busqueda, para el trabajo y el procesamiento de texto incluye los metacaracteres.  
+busqueda, para el trabajo y el procesamiento de texto incluye los metacaracteres.
+
+36.- Funciones decoradores permiten mejorar el funcionamiento de otras funciones.  
 

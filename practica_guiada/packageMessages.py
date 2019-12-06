@@ -1,6 +1,8 @@
 from tkinter import messagebox
 
 class Messages():
+
+	""" clase destinada para los mensajes al usuario  """
 	
 	def showInfoCreateDB( self ):
 		return messagebox.showinfo( "BBDD", "Base de datos, creada con exito" )
@@ -38,5 +40,5 @@ class Messages():
 		return messagebox.showinfo( "Aplicación CRUD", "Prototipo de pruebas de CRUD,\ncreador: Gabriel Martínez,\nversion 2019" )
 
 	def avisoLicencia( self ):
-		return messagebox.showwarning( "Licencia", "producto bajo licencia GNU" )
+		return messagebox.showwarning( "Licencia", "Producto bajo licencia GNU" )
 

@@ -1,6 +1,8 @@
 from appComponent import *
 
-# ARCHIVO DE ARRANQUE Bootstrap.py
+""" Archivo de Arranque de la aplicacion  """
+
+# help( AppComponent )
 
 app = AppComponent()
 app.loop()

@@ -3,6 +3,8 @@ from packageMessages import Messages
 
 class DataBase():
 
+	""" clase destinada a realizar las consultas hacia la BD """
+
 	def __init__( self ):
 
 		self.__sql = ""
@@ -14,6 +16,8 @@ class DataBase():
 		
  
 	def connectBD( self, method ):
+
+		""" funcion que inicia la conexion con la BD  """
 
 		self.conexion = sqlite3.connect( "Usuarios" )
 		self.puntero = self.conexion.cursor()
@@ -34,6 +38,8 @@ class DataBase():
 			self.__deleteUser()
 
 	def __createTable( self ):
+
+		""" crea las tablas de la BD  """
 
 		self.__sql = '''
 
@@ -61,8 +67,9 @@ class DataBase():
 			self.__closeConexion()
 
 	def __createUser( self ):
+
+		""" crea un registro de usuario  """
 		
-		# remueve el id
 		self.data.remove( self.data[0] )
 
 		self.__sql = "INSERT INTO DatosUsuarios VALUES ( NULL, ?, ?, ?, ?, ? );"
@@ -85,6 +92,8 @@ class DataBase():
 
 	def __updateUser( self ):
 
+		""" actualiza un usuario  """
+
 		datosUsuarios = self.data[1], self.data[2], self.data[3], self.data[4], self.data[5]
 		idUser = self.data[0]
 
@@ -106,6 +115,8 @@ class DataBase():
 
 	def __readUser( self ):
 
+		""" consulta un usuario """
+
 		idUser = self.data[0]
 
 		self.__sql = "SELECT * FROM DatosUsuarios WHERE id =" + idUser
@@ -122,6 +133,8 @@ class DataBase():
 		self.__closeConexion()
 
 	def  __deleteUser( self ):
+
+		""" elimina un usuario """
 
 		idUser = self.data[0]
 
@@ -140,6 +153,8 @@ class DataBase():
 			self.__closeConexion()
 
 	def __closeConexion( self ):
+
+		""" funcion que cierra la conexion  """
 
 		self.puntero.close()
 		self.__sql = ""

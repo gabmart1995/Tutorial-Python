@@ -4,6 +4,8 @@ from packageMessages import Messages
 
 class Operations():
 
+	""" clase destinada a preparar las operaciones de hacia la BD"""
+
 	def __init__( self ):
 
 		self.textArea = None
@@ -15,6 +17,8 @@ class Operations():
 
 	def clear( self ):
 
+		""" funcion que limplia los formularios del usuario """
+
 		for entry in self.textEntry:
 			entry.set( "" )
 
@@ -23,6 +27,8 @@ class Operations():
 
 	def getData( self, method ):
 		
+		""" funcion que obtiene la data de los formularios hacia la BD  """
+
 		data = []
 
 		for entry in self.textEntry:
@@ -43,6 +49,8 @@ class Operations():
 
 
 	def __setDataSelect( self ):
+
+		""" funcion que coloca la informacion en los entry  """
 		
 		for usuario in self.dataBase.records:
 
@@ -55,6 +63,8 @@ class Operations():
 
 
 class AppComponent( Operations ):
+
+	""" Clase principal destinada a construir la interfaz de usuario """
 
 	def __init__( self ):
 
@@ -72,6 +82,8 @@ class AppComponent( Operations ):
 
 	def __setVariables( self ):
 
+		""" permite obtener las variables globales  """
+
 		idUser = StringVar()
 		name = StringVar()
 		lastName = StringVar()
@@ -83,6 +95,8 @@ class AppComponent( Operations ):
 
 	def __createMenu( self ):
 		
+		""" funcion que crea el menu de la aplicacion  """
+
 		barraMenu = Menu( self.root )
 		
 		# config
@@ -116,6 +130,8 @@ class AppComponent( Operations ):
 
 	def __createForm( self ): 
 
+		""" funcion de creacion de formularios  """
+
 		self.frameForm = Frame( self.root )
 		self.frameForm.pack()
 
@@ -148,6 +164,8 @@ class AppComponent( Operations ):
 
 	def __createLabels( self ):
 
+		""" funcion que crea los labels  """
+
 		idLabel = Label( self.frameForm, text = "Id:" )
 		idLabel.grid( row = 0, column = 0, sticky = "e", padx = 10, pady = 10 )
 
@@ -169,6 +187,8 @@ class AppComponent( Operations ):
 
 	def __createButtons( self ):
 
+		""" funciones para crear los botones  """
+
 		self.frameButtons = Frame( self.root )
 		self.frameButtons.pack()
 
@@ -187,6 +207,8 @@ class AppComponent( Operations ):
 
 	def __closeApp( self ):
 
+		""" funcion para cerrar la aplicacion  """
+
 		opcion = self.messages.getInfoClose()
 
 		if opcion == "yes":
@@ -194,6 +216,8 @@ class AppComponent( Operations ):
 
 
 	def loop( self ):
+
+		""" funcion que ejecuta el loop  """
 		
 		self.root.mainloop()
 
