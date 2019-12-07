@@ -17,7 +17,7 @@ class Operations():
 
 	def clear( self ):
 
-		""" funcion que limplia los formularios del usuario """
+		""" funcion que limpia los formularios del usuario """
 
 		for entry in self.textEntry:
 			entry.set( "" )
@@ -50,7 +50,7 @@ class Operations():
 
 	def __setDataSelect( self ):
 
-		""" funcion que coloca la informacion en los entry  """
+		""" funcion que coloca la informacion BD en los entry  """
 		
 		for usuario in self.dataBase.records:
 

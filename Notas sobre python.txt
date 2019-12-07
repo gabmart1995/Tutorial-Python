@@ -143,5 +143,22 @@ con los resultados
 35.- Las expresiones regulares son una secuencia de caracteres que forman un patron de
 busqueda, para el trabajo y el procesamiento de texto incluye los metacaracteres.
 
-36.- Funciones decoradores permiten mejorar el funcionamiento de otras funciones.  
+36.- Funciones decoradores permiten mejorar el funcionamiento de otras funciones. 
+
+37.- Documentación para realizar pruebas utilzando el modulo doctest, permite 
+elaborar pruebas que permitan al usuario determinar si esa función es accesible a futuro. 
+
+38.- Para generar ejecutables en Python necesitas instalar un paquete installer con el
+comando 
+
+	# pip3 install pyinstaller
+	# pyinstaller nombre.py
+
+	Solo interfaz grafica
+	# pyinstaller --windowed nombre.py
+
+	Solo el ejecutable
+	# pyinstaller --windowed --onefile nombre.py
+	# pyinstaller --windowed --onefile --icon=$PATH nombre.py
+
 
